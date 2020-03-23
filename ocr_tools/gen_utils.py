@@ -150,6 +150,8 @@ def select_char_example(char_img, char):
 # ==============================================================================
 # =========================== RANDOM DATE GENERATION ===========================
 # ==============================================================================
+import gc
+
 def random_stamp_date(char_img):
     '''
     Generate an image of random numbers drawn from img/numbers folder
