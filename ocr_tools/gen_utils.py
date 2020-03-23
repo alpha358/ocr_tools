@@ -4,6 +4,7 @@ import cv2
 from glob import glob
 from collections import defaultdict
 from numpy import floor
+import gc
 
 
 def get_imgs_dict(path='img/numbers/',
