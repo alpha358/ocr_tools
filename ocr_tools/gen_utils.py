@@ -242,7 +242,7 @@ def random_stamp_date(char_img):
 
     # memory cleanup
     del background
-    gc.collect() # TODO: mey be not needed in the future
+    gc.collect() # TODO: may be not needed in the future
 
 
     return img2, text
