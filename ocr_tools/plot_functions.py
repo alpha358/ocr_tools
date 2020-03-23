@@ -12,6 +12,9 @@ def display_examples(model, test_loader, n=20, p_tresh=0.001):
         # batch, character_class, sequence_element_number
         y_hat = model(x.to(DEVICE))
 
+
+        batch_size = x.shape[0]
+
         n_iter = 0
         for n_example in range(batch_size):
             n_iter += 1

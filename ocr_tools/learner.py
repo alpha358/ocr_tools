@@ -186,7 +186,7 @@ class Learner:
 
         train_loss, train_err_rate = [cb.get_average() for cb in cbs[:2]]
         self.train_losses.append(train_loss)
-        print(f'train loss {train_loss:.3f}, train character err rate {train_err_rate:.3f},', end=' ')
+        print(f'train loss {train_loss:.3f}, train CER {train_err_rate:.3f},', end=' ')
 
 
     def eval_on_validation(self):
@@ -198,7 +198,7 @@ class Learner:
 
         val_loss, val_err_rate = [cb.get_average() for cb in cbs]
         self.val_losses.append(val_loss)
-        print(f'val loss {val_loss:.3f}, val char err rate: {val_err_rate:.3f}')
+        print(f'val loss {val_loss:.3f}, val CER: {val_err_rate:.3f}')
 
 
     def plot_lr_find(self, skip_start=10, skip_end=5):
@@ -258,3 +258,13 @@ class Learner:
             if self.epoch_scheduler:
                 self.lrs.append(self.epoch_scheduler.get_lr()[0])
                 self.epoch_scheduler.step()
+
+
+def plot_lrs(lrs):
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    batches = np.arange(1, len(lrs)+1)
+    ax.plot(batches, lrs)
+    ax.set_xlabel('batch')
+    ax.set_ylabel('lr')
+    plt.show()
