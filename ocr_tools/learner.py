@@ -43,10 +43,10 @@ class Accuracy:
         return self.num_correct / self.num_samples
 
 
-class ChErrRate:
+class CharErrRate:
     def __init__(self, counter=None):
         self.num_samples = 0
-        self.num_correct = 0
+        self.err_count = 0
         self.counter = counter if counter else self
 
     def count_err_rate(self, y_hat, y_gt):
@@ -174,7 +174,7 @@ class Learner:
         self.model.train()
 
         if self.mixup: self.loss = self.mixup.mixup_loss
-        cbs = [AverageLoss(), ChErrRate(self.mixup), self.mixup]
+        cbs = [AverageLoss(), CharErrRate(self.mixup), self.mixup]
         self.iterate(self.train_loader, cbs, backward_pass=True)
         if self.mixup: self.loss = self.mixup.loss
 
@@ -186,7 +186,7 @@ class Learner:
     def eval_on_validation(self):
         self.model.eval()
 
-        cbs = [AverageLoss(), ChErrRate()]
+        cbs = [AverageLoss(), CharErrRate()]
         with torch.no_grad():
             self.iterate(self.val_loader, cbs)
 
