@@ -1,7 +1,10 @@
-def display_examples(model, test_loader, n=20, p_tresh=0.001, DEVICE=DEVICE):
+def display_examples(model, test_loader, n=20, p_tresh=0.001):
     '''
     Display test examples and model text with appropriate probs
     '''
+
+    # read the model device
+    DEVICE = next(model.parameters()).device
 
     # test loader should have small batch
     for x, y_gt in test_loader:
