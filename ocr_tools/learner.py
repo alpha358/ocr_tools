@@ -53,14 +53,14 @@ class CharErrRate:
         '''
         mean error count per example in batch
         '''
+        err_count = 0
         for batch_idx in range(y_hat.shape[0]):
-            err_count.append( wer_eval(y_hat[batch_idx, :, :], y_gt[batch_idx, :].numpy().tolist()) )
-        return err_count # / len(err_count) # mean error count per example in batch
+            err_count += wer_eval(y_hat[batch_idx, :, :], y_gt[batch_idx, :].numpy().tolist())
+        return err_count # mean error count per example in batch, summ over batch
 
     def process_prediction(self, Y_pred, Y):
         batch_size = Y.size(0)
-        labels_pred = torch.argmax(Y_pred, -1)
-        self.err_count += self.counter.count_err_rate(labels_pred, Y)
+        self.err_count += self.counter.count_err_rate(Y_pred, Y)
         self.num_samples += batch_size
 
     def get_average(self):
