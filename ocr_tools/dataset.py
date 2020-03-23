@@ -22,8 +22,14 @@ class IterDataset(torch.utils.data.IterableDataset):
     avoid having duplicate data returned from the workers.
     '''
 
-    def __init__(self, char_images_dict, random_stamp_date, examples_count = 64*100):
+    def __init__(self,
+                    char_images_dict,
+                    text_to_idx, # dictionary of character indexes
+                    random_stamp_date,
+                    examples_count = 64*100
+                    ):
         '''
+        text_to_idx --- map character to its index
         char_images_dict --- mapping of characters to images
         random_stamp_date --- function generating random date
         examples_count   --- the number of examples in the dataset
@@ -34,6 +40,7 @@ class IterDataset(torch.utils.data.IterableDataset):
         self.char_images_dict = char_images_dict.copy() # copy for safety, this is small dictionary.
         self.examples_count = examples_count
         self.random_stamp_date = random_stamp_date
+        self.text_to_idx = text_to_idx
 
 
     def generator(self):
@@ -55,7 +62,7 @@ class IterDataset(torch.utils.data.IterableDataset):
             img, text = self.random_stamp_date(self.char_images_dict)
 
             # integers representation of text
-            y_gt = [text_to_idx[t] for t in text]
+            y_gt = [self.text_to_idx[t] for t in text]
 
             yield torch.tensor(img, dtype=torch.float), torch.tensor(y_gt)
 
