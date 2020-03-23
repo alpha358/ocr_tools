@@ -47,6 +47,7 @@ class CharErrRate:
     def __init__(self, counter=None):
         self.num_samples = 0
         self.err_count = 0
+        # interesting...
         self.counter = counter if counter else self
 
     def count_err_rate(self, y_hat, y_gt):
@@ -60,7 +61,7 @@ class CharErrRate:
                             y_hat[batch_idx, :, :],
                             y_gt[batch_idx, :].detach().cpu().numpy().tolist()
                          )
-        return err_count # mean error count per example in batch, summ over batch
+        return err_count # mean error count inside example, summ over batch
 
     def process_prediction(self, Y_pred, Y):
         batch_size = Y.size(0)
@@ -68,7 +69,7 @@ class CharErrRate:
         self.num_samples += batch_size
 
     def get_average(self):
-        return self.num_correct / self.num_samples
+        return self.err_count / self.num_samples
 
 class AverageLoss:
     def __init__(self):
