@@ -33,6 +33,7 @@ class IterDataset(torch.utils.data.IterableDataset):
         # init attributes
         self.char_images_dict = char_images_dict.copy() # copy for safety, this is small dictionary.
         self.examples_count = examples_count
+        self.random_stamp_date = random_stamp_date
 
 
     def generator(self):
