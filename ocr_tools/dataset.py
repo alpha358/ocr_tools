@@ -22,8 +22,9 @@ class IterDataset(torch.utils.data.IterableDataset):
     avoid having duplicate data returned from the workers.
     '''
 
-    def __init__(self, char_images_dict, examples_count = 64*100):
+    def __init__(self, char_images_dict, random_stamp_date, examples_count = 64*100):
         '''
+        random_stamp_date --- function generating random date
         char_images_dict --- mapping of character images to the
         examples_count   --- the number of examples in the dataset
         '''
@@ -77,3 +78,30 @@ class IterDataset(torch.utils.data.IterableDataset):
             # iter_end = min(iter_start + per_worker, self.end)
 
         return self.generator()
+
+
+
+# ==================================== OLD =====================================
+# def generator(char_img, epoch_size = 100, batch_size = 2):
+#     '''
+#     char_img   ---  images of characters
+#                     these images should be separate for train/test sets
+#     epoch_size ---  number of batches in epoch
+#     '''
+
+#     for N_ in range(epoch_size):
+#         y_gt = [] #np.zeros((batch_size, n_chars_dict, n_chars))
+#         imgs = []
+#         for N in range(batch_size):
+#             # stitching together the char-images to create an example
+#             img, text = random_stamp_date(char_img)
+#             imgs.append(np.copy(img))
+
+#             # integers representation of text
+#             y_gt.append([text_to_idx[t] for t in text])
+
+#         # yield batch
+#         imgs = torch.tensor(imgs)
+#         y_gt = torch.tensor(y_gt)
+
+#         yield imgs, y_gt
