@@ -20,6 +20,10 @@ import matplotlib.pyplot as plt
 
 import time
 
+# torch.__version__ == 1.3: get_lr
+# torch.__version__ == 1.3: get_last_lr
+
+
 class Accuracy:
     def __init__(self, counter=None):
         self.num_samples = 0
@@ -162,7 +166,7 @@ class Learner:
         self.optimizer.step()
 
         if self.batch_scheduler:
-            self.lrs.append(self.batch_scheduler.get_last_lr()[0])
+            self.lrs.append(self.batch_scheduler.get_lr()[0])
             self.batch_scheduler.step()
 
 
@@ -246,7 +250,7 @@ class Learner:
             self.eval_on_validation()
 
             if self.epoch_scheduler:
-                self.lrs.append(self.epoch_scheduler.get_last_lr()[0])
+                self.lrs.append(self.epoch_scheduler.get_lr()[0])
                 self.epoch_scheduler.step()
 
 def plot_lrs(lrs):
