@@ -55,9 +55,10 @@ class CharErrRate:
         '''
         err_count = 0
         for batch_idx in range(y_hat.shape[0]):
+            # TODO: detach() can cause backprop problems here?
             err_count += wer_eval(
-                            y_hat[batch_idx, :, :].cpu().numpy(),
-                            y_gt[batch_idx, :].cpu().numpy().tolist()
+                            y_hat[batch_idx, :, :].detach().cpu().numpy(),
+                            y_gt[batch_idx, :].detach().cpu().numpy().tolist()
                          )
         return err_count # mean error count per example in batch, summ over batch
 
