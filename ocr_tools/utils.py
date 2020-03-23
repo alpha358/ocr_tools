@@ -111,7 +111,9 @@ def preds_to_integer(Preds, eps, p_tresh = 0.5):
 # ------------------------------------------------------------------------------
 # ------------------- Convert preds to integer and eval WER --------------------
 # ------------------------------------------------------------------------------
-def wer_eval(preds, labels, eps, ratio = False ):
+# TODO: May need to change eps if adding more characters
+
+def wer_eval(preds, labels, eps = 12, ratio = False):
     '''
     Word (character) error rate evaluation
 

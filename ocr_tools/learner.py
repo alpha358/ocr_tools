@@ -1,6 +1,9 @@
 # CREDIT: JULIUS RUSECKAS
 # http://web.vu.lt/tfai/j.ruseckas/files/presentations/cifar10-tricks.ipynb
 
+# imports from other tools
+from .utils import wer_eval
+
 import numpy as np
 from itertools import islice
 import copy
