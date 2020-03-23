@@ -55,7 +55,10 @@ class CharErrRate:
         '''
         err_count = 0
         for batch_idx in range(y_hat.shape[0]):
-            err_count += wer_eval(y_hat[batch_idx, :, :], y_gt[batch_idx, :].numpy().tolist())
+            err_count += wer_eval(
+                            y_hat[batch_idx, :, :].cpu().numpy(),
+                            y_gt[batch_idx, :].cpu().numpy().tolist()
+                         )
         return err_count # mean error count per example in batch, summ over batch
 
     def process_prediction(self, Y_pred, Y):
