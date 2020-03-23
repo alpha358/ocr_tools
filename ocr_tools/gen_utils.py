@@ -145,3 +145,103 @@ def select_char_example(char_img, char):
         example_idx = 0
 
     return  example_idx
+
+# ==============================================================================
+# =========================== RANDOM DATE GENERATION ===========================
+# ==============================================================================
+def random_stamp_date(char_img):
+    '''
+    Generate an image of random numbers drawn from img/numbers folder
+    '''
+    # TODO: make global
+    #n_characters = 8
+    char_width = 32
+    char_height = 64
+    spacing = 32
+
+    # use simple white background
+    background = np.ones((char_height, 512, 4))*255
+
+    text = [] # GT text
+
+    # Date format XX.XX.XX    Z
+
+    x_coord = 0
+    for char_type in "XX.XX.XX   X":
+
+
+        # Character cases
+        if char_type == 'X':
+            number = np.random.randint(0, 9 + 1)
+            char = str(number)
+            char_size_ = (32,64) # randomize?
+            text.append(char)
+            spacing = 32
+            top_margin = 0
+
+        if char_type == '.':
+            char = '.'
+            char_size_ = (16,16) # randomize?
+            text.append(char)
+            spacing = 16
+            top_margin = 64-16
+
+        # for space just skip
+        if char_type == " ":
+            x_coord += spacing_ # step horizontally
+            continue
+
+
+        # randomize spacing
+        spacing_ = int(spacing* (1+np.random.rand()*0.3) )
+
+
+        # select the random character example
+        example_idx = select_char_example(char_img, char)
+
+
+        # character onto image
+        img2 = superimpose_img(
+                            background,
+                            np.copy( char_img[char][example_idx] ),
+                            (0, x_coord),
+                            char_size = char_size_,
+                            top_margin = top_margin
+        )
+
+
+
+        # step horizontally
+        x_coord += spacing_
+
+
+        # rgba to rgb
+        img2 = cv2.cvtColor(np.uint8(img2), cv2.COLOR_RGBA2RGB)
+
+
+    # Add whitespace margin and rotate sligltly
+    #ia2 = (np.ones(img2.shape[0]+64, img2.shape[1]+64, 3)*255)[]
+    img2 = cv2.copyMakeBorder(img2, top=32, bottom=32, left=64, right=0, borderType=cv2.BORDER_CONSTANT, value=(255,255,255) )
+
+    img2 = rotateImage(img2, np.random.randint(-5,5) )
+
+
+
+    # downsample resolution for half of examples
+    if np.random.rand() > 0.5:
+
+        if np.random.rand() > 0.5:
+            img2 = cv2.resize(img2, (137,48)) # small size
+        else:
+            img2 = cv2.resize(img2, (100,20)) # small size
+
+        img2 = cv2.resize(img2, (576,128)) #, the size needed for network
+
+
+
+    # memory cleanup
+    del background
+    gc.collect() # TODO: mey be not needed in the future
+
+
+    return img2, text
