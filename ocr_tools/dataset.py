@@ -52,7 +52,7 @@ class IterDataset(torch.utils.data.IterableDataset):
         for _ in range(self.examples_count):
 
             # stitching together the char-images to create an example
-            img, text = random_stamp_date(self.char_images_dict)
+            img, text = self.random_stamp_date(self.char_images_dict)
 
             # integers representation of text
             y_gt = [text_to_idx[t] for t in text]
