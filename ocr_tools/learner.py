@@ -18,6 +18,8 @@ from torchvision import datasets, transforms
 
 import matplotlib.pyplot as plt
 
+import time
+
 class Accuracy:
     def __init__(self, counter=None):
         self.num_samples = 0
@@ -96,7 +98,9 @@ class AccumulateSmoothLoss:
 
 class Learner:
     def __init__(self, model, loss, optimizer, train_loader, val_loader,
-                 epoch_scheduler=None, batch_scheduler=None, mixup=None):
+                 epoch_scheduler=None, batch_scheduler=None, mixup=None,
+                 time_limit_hr = 1
+                 ):
         self.model = model
         self.loss = loss
         self.optimizer = optimizer
@@ -105,6 +109,9 @@ class Learner:
         self.epoch_scheduler = epoch_scheduler
         self.batch_scheduler = batch_scheduler
         self.mixup = mixup
+        self.time_limit_hr = time_limit_hr
+        self.start_time = time.time()
+
         self.reset_history()
 
         # read device from the model
@@ -131,6 +138,11 @@ class Learner:
 
     def iterate(self, loader, cbs=[], backward_pass=False):
         for X, Y in loader:
+
+            if time.time() - self.start_time > self.time_limit_hr*60*60:
+                print('Stopping due to my time limit')
+                break;
+
             X, Y = X.to(self.DEVICE), Y.to(self.DEVICE)
             for cb in cbs:
                 if hasattr(cb, 'process_batch'): X = cb.process_batch(X)

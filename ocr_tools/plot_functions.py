@@ -27,3 +27,36 @@ def display_examples(model, test_loader, n=20, p_tresh=0.001):
             if n_iter > n: break
 
         break
+
+
+# ==============================================================================
+# from IPython import display
+# def plot_loss(LOSS, err):
+#     '''
+#     Display loss and Error rate
+#     '''
+#
+#     display.clear_output(wait=True)
+# #     plt.clf()
+# #     try:
+# #         fig.clear()
+# #         plt.close(fig)
+# #     except:
+# #         pass
+#
+#     fig, ax = plt.subplots(1, 2, figsize=(20,10))
+#     ax[0].plot(LOSS)
+#     ax[0].set_yscale('log')
+#     ax[0].set_title('LOSS')
+#     ax[0].set_xlabel('step')
+#
+#
+#     ax[1].plot(err)
+#     ax[1].set_title('Mean error count')
+#     ax[1].set_xlabel('step')
+#
+#     fig.show()
+#     display.display(fig)
+#
+#     fig.clear()
+#     plt.close(fig)
