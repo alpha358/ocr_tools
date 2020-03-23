@@ -24,8 +24,8 @@ class IterDataset(torch.utils.data.IterableDataset):
 
     def __init__(self, char_images_dict, random_stamp_date, examples_count = 64*100):
         '''
+        char_images_dict --- mapping of characters to images
         random_stamp_date --- function generating random date
-        char_images_dict --- mapping of character images to the
         examples_count   --- the number of examples in the dataset
         '''
         super(IterDataset).__init__()
