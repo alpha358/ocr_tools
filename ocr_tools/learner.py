@@ -141,6 +141,7 @@ class Learner:
         ax.plot(epochs, self.val_losses, '.-', label='val')
         ax.set_xlabel('epoch')
         ax.set_ylabel('loss')
+        ax.set_yscale('log')
         ax.legend()
         plt.show()
 
@@ -183,9 +184,9 @@ class Learner:
         self.iterate(self.train_loader, cbs, backward_pass=True)
         if self.mixup: self.loss = self.mixup.loss
 
-        train_loss, train_acc = [cb.get_average() for cb in cbs[:2]]
+        train_loss, train_err_rate = [cb.get_average() for cb in cbs[:2]]
         self.train_losses.append(train_loss)
-        print(f'train loss {train_loss:.3f}, train accuracy {train_acc:.3f},', end=' ')
+        print(f'train loss {train_loss:.3f}, train character err rate {train_err_rate:.3f},', end=' ')
 
 
     def eval_on_validation(self):
@@ -257,12 +258,3 @@ class Learner:
             if self.epoch_scheduler:
                 self.lrs.append(self.epoch_scheduler.get_lr()[0])
                 self.epoch_scheduler.step()
-
-def plot_lrs(lrs):
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    batches = np.arange(1, len(lrs)+1)
-    ax.plot(batches, lrs)
-    ax.set_xlabel('batch')
-    ax.set_ylabel('lr')
-    plt.show()
