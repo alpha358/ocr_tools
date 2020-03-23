@@ -43,7 +43,7 @@ class Accuracy:
         return self.num_correct / self.num_samples
 
 
-class ErrRate:
+class ChErrRate:
     def __init__(self, counter=None):
         self.num_samples = 0
         self.num_correct = 0
@@ -174,7 +174,7 @@ class Learner:
         self.model.train()
 
         if self.mixup: self.loss = self.mixup.mixup_loss
-        cbs = [AverageLoss(), Accuracy(self.mixup), self.mixup]
+        cbs = [AverageLoss(), ChErrRate(self.mixup), self.mixup]
         self.iterate(self.train_loader, cbs, backward_pass=True)
         if self.mixup: self.loss = self.mixup.loss
 
@@ -186,13 +186,13 @@ class Learner:
     def eval_on_validation(self):
         self.model.eval()
 
-        cbs = [AverageLoss(), Accuracy()]
+        cbs = [AverageLoss(), ChErrRate()]
         with torch.no_grad():
             self.iterate(self.val_loader, cbs)
 
-        val_loss, val_acc = [cb.get_average() for cb in cbs]
+        val_loss, val_err_rate = [cb.get_average() for cb in cbs]
         self.val_losses.append(val_loss)
-        print(f'val loss {val_loss:.3f}, val accuracy {val_acc:.3f}')
+        print(f'val loss {val_loss:.3f}, val char err rate: {val_err_rate:.3f}')
 
 
     def plot_lr_find(self, skip_start=10, skip_end=5):
