@@ -26,7 +26,14 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5):
         for n_example in range(batch_size):
 
             # Plot the probs distribution
-            plt.imshow(y_hat[n_example, :, :].detach().cpu().numpy())
+            plt.pcolormesh(
+                y_hat[n_example, :, :].detach().cpu().numpy(),
+                edgecolors='k'
+                )
+            plt.yticks(
+                        list(idx_to_text.keys()), 
+                        list(idx_to_text.labels())
+                    )
             plt.ylabel('char_class')
             plt.xlabel('width')
             plt.show()
