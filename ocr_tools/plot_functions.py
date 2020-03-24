@@ -1,9 +1,11 @@
 from .utils import preds_to_integer
 import matplotlib.pyplot as plt
 
-def display_examples(model, test_loader, n=20, p_tresh=0.001):
+def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5):
     '''
     Display test examples and model text with appropriate probs
+
+    idx_to_text --- map indexes to char strings
     '''
 
     # read the model device
