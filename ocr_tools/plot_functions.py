@@ -1,5 +1,5 @@
 from .utils import preds_to_integer
-
+import matplotlib.pyplot as plt
 
 def display_examples(model, test_loader, n=20, p_tresh=0.001):
     '''
