@@ -1,4 +1,4 @@
-from utils import preds_to_integer
+from .utils import preds_to_integer
 
 
 def display_examples(model, test_loader, n=20, p_tresh=0.001):
