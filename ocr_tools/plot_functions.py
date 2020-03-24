@@ -24,12 +24,14 @@ def display_examples(model, test_loader, n=20, p_tresh=0.001):
         for n_example in range(batch_size):
 
             # Plot the probs distribution
-            plt.imshow(y_hat[n_example, :, :].cpu().numpy())
+            plt.imshow(y_hat[n_example, :, :].detach().cpu().numpy())
             plt.ylabel('char_class')
             plt.xlabel('width')
             plt.show()
 
-            preds, probs = preds_to_integer(y_hat[n_example, :, :], eps=eps, p_tresh=p_tresh)
+            preds, probs = preds_to_integer(
+                y_hat[n_example, :, :].detach(), eps=eps, p_tresh=p_tresh
+            )
 
             plt.imshow(x[n_example, :, :, :]/255) #gal reiktu pernormuoti pries input?
             #pdb.set_trace()
