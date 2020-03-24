@@ -1,3 +1,6 @@
+from utils import preds_to_integer
+
+
 def display_examples(model, test_loader, n=20, p_tresh=0.001):
     '''
     Display test examples and model text with appropriate probs
@@ -14,12 +17,14 @@ def display_examples(model, test_loader, n=20, p_tresh=0.001):
 
 
         batch_size = x.shape[0]
+        eps = y_hat.shape[1] - 1 # the last class idx
+
 
         n_iter = 0
         for n_example in range(batch_size):
             n_iter += 1
 
-            preds, probs = preds_to_integer(y_hat[n_example, :, :], p_tresh=0.001)
+            preds, probs = preds_to_integer(y_hat[n_example, :, :], eps=eps, p_tresh=0.001)
 
             plt.imshow(x[n_example, :, :, :]/255) #gal reiktu pernormuoti pries input?
             #pdb.set_trace()
