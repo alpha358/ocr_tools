@@ -20,11 +20,16 @@ def display_examples(model, test_loader, n=20, p_tresh=0.001):
         eps = y_hat.shape[1] - 1 # the last class idx
 
 
-        n_iter = 0
-        for n_example in range(batch_size):
-            n_iter += 1
 
-            preds, probs = preds_to_integer(y_hat[n_example, :, :], eps=eps, p_tresh=0.001)
+        for n_example in range(batch_size):
+
+            # Plot the probs distribution
+            plt.imshow(y_hat[n_example, :, :].cpu().numpy())
+            plt.ylabel('char_class')
+            plt.xlabel('width')
+            plt.show()
+
+            preds, probs = preds_to_integer(y_hat[n_example, :, :], eps=eps, p_tresh=p_tresh)
 
             plt.imshow(x[n_example, :, :, :]/255) #gal reiktu pernormuoti pries input?
             #pdb.set_trace()
@@ -32,7 +37,7 @@ def display_examples(model, test_loader, n=20, p_tresh=0.001):
             print([idx_to_text[idx] for idx in preds])
             print(probs)
 
-            if n_iter > n: break
+            if n_example > n: break
 
         break
 
