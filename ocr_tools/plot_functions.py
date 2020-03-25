@@ -32,7 +32,7 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5):
                 )
             plt.yticks(
                         list(idx_to_text.keys()), 
-                        list(idx_to_text.labels())
+                        list(idx_to_text.values())
                     )
             plt.ylabel('char_class')
             plt.xlabel('width')
