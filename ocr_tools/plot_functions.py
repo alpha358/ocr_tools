@@ -1,7 +1,8 @@
 from .utils import preds_to_integer
 import matplotlib.pyplot as plt
 
-def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5):
+
+def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5, blank=0):
     '''
     Display test examples and model text with appropriate probs
 
@@ -19,7 +20,7 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5):
 
 
         batch_size = x.shape[0]
-        eps = y_hat.shape[1] - 1 # the last class idx
+        #eps = y_hat.shape[1] - 1 # the last class idx
 
 
 
@@ -39,7 +40,7 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5):
             plt.show()
 
             preds, probs = preds_to_integer(
-                y_hat[n_example, :, :].detach(), eps=eps, p_tresh=p_tresh
+                y_hat[n_example, :, :].detach(), blank=blank, p_tresh=p_tresh
             )
 
             plt.imshow(x[n_example, :, :, :]/255) #gal reiktu pernormuoti pries input?

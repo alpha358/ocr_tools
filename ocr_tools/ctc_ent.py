@@ -1,3 +1,6 @@
+# Taken from
+# https://papers.nips.cc/paper/7363-connectionist-temporal-classification-with-maximum-entropy-regularization.pdf
+
 #coding=utf-8
 import os
 import torch as T

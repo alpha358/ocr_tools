@@ -44,9 +44,10 @@ class Accuracy:
 
 
 class CharErrRate:
-    def __init__(self, counter=None):
+    def __init__(self, counter=None, blank=0):
         self.num_samples = 0
         self.err_count = 0
+        self.blank = blank
         # interesting...
         self.counter = counter if counter else self
 
@@ -59,7 +60,8 @@ class CharErrRate:
             # TODO: detach() can cause backprop problems here?
             err_count += wer_eval(
                             y_hat[batch_idx, :, :],
-                            y_gt[batch_idx, :].detach().cpu().numpy().tolist()
+                            y_gt[batch_idx, :].detach().cpu().numpy().tolist(),
+                            blank = self.blank
                          )
         return err_count # mean error count inside example, summ over batch
 
@@ -108,7 +110,7 @@ class AccumulateSmoothLoss:
 class Learner:
     def __init__(self, model, loss, optimizer, train_loader, val_loader,
                  epoch_scheduler=None, batch_scheduler=None, mixup=None,
-                 time_limit_hr = 1
+                 time_limit_hr=1, blank=0
                  ):
         self.model = model
         self.loss = loss
@@ -120,6 +122,7 @@ class Learner:
         self.mixup = mixup
         self.time_limit_hr = time_limit_hr
         self.start_time = time.time()
+        self.blank = blank
 
         self.reset_history()
 
@@ -180,7 +183,7 @@ class Learner:
         self.model.train()
 
         if self.mixup: self.loss = self.mixup.mixup_loss
-        cbs = [AverageLoss(), CharErrRate(self.mixup), self.mixup]
+        cbs = [AverageLoss(), CharErrRate(blank=self.blank), self.mixup]
         self.iterate(self.train_loader, cbs, backward_pass=True)
         if self.mixup: self.loss = self.mixup.loss
 
@@ -192,7 +195,7 @@ class Learner:
     def eval_on_validation(self):
         self.model.eval()
 
-        cbs = [AverageLoss(), CharErrRate()]
+        cbs = [AverageLoss(), CharErrRate(blank=self.blank)]
         with torch.no_grad():
             self.iterate(self.val_loader, cbs)
 

@@ -1,3 +1,7 @@
+# Taken from
+# https://papers.nips.cc/paper/7363-connectionist-temporal-classification-with-maximum-entropy-regularization.pdf
+
+
 import os
 # os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   # see issue #152
 # os.environ["CUDA_VISIBLE_DEVICES"]="2"

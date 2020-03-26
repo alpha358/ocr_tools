@@ -111,15 +111,13 @@ def preds_to_integer(Preds, eps, p_tresh = 0.5):
 # ------------------------------------------------------------------------------
 # ------------------- Convert preds to integer and eval WER --------------------
 # ------------------------------------------------------------------------------
-# TODO: May need to change eps if adding more characters
-
-def wer_eval(preds, labels, eps = 12, ratio = False):
+def wer_eval(preds, labels, blank = 0, ratio = False):
     '''
     Word (character) error rate evaluation
 
     preds  --- log probabilities [T, C]
     labels --- int labels (?)
-    eps --- blank char index,
+    blank --- blank char index,
         = len(text_to_idx)
 
     1. Convert predictions to integers
@@ -127,7 +125,7 @@ def wer_eval(preds, labels, eps = 12, ratio = False):
     '''
 
     # Collapse blanks and take maximaly likely characters
-    preds, probs = preds_to_integer(preds, eps, p_tresh=0.5)
+    preds, probs = preds_to_integer(preds, blank, p_tresh=0.5)
 
 #     print('preds:', preds)
 #     print('labels:', labels)
