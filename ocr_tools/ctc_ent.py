@@ -90,6 +90,10 @@ def ctc_ent_loss_log(pred, pred_len, token, token_len, blank=0):
     :out alpha: (Time, batch, 2U+1) ∑p(π|x)
     :out beta: (Time, batch, 2U+1)  ∑p(π|x)logp(π|x)
     :out H: -beta/alpha+log(alpha)
+    
+    Returns
+        H --- entropy
+        costs --- the loss, per width 
     '''
     Time, batch = pred.size(0), pred.size(1)
     U = token.size(1)
