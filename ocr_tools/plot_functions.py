@@ -40,7 +40,7 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5, blank=0
             plt.show()
 
             preds, probs = preds_to_integer(
-                y_hat[n_example, :, :].detach(), blank=blank, p_tresh=p_tresh
+                y_hat[n_example, :, :].detach(), eps=blank, p_tresh=p_tresh
             )
 
             plt.imshow(x[n_example, :, :, :]/255) #gal reiktu pernormuoti pries input?
