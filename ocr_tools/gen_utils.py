@@ -106,7 +106,7 @@ def random_stamp_numbers(char_img):
         img2 = cv2.cvtColor(np.uint8(img2), cv2.COLOR_RGBA2RGB)
 
 
-    return img2, text
+    return img2 / 255.0, text
 
 # plt.imshow(img2)
 # plt.show()
