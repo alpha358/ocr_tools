@@ -247,4 +247,4 @@ def random_stamp_date(char_img):
     gc.collect() # TODO: may be not needed in the future
 
 
-    return img2, text
+    return img2/255.0, text
