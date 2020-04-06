@@ -43,7 +43,7 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5, blank=0
                 y_hat[n_example, :, :].detach(), blank=blank, p_tresh=p_tresh
             )
 
-            plt.imshow(x[n_example, :, :, :]/255) #gal reiktu pernormuoti pries input?
+            plt.imshow(x[n_example, :, :, :]) #gal reiktu pernormuoti pries input?
             #pdb.set_trace()
             plt.show()
             print([idx_to_text[idx] for idx in preds])

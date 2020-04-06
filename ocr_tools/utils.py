@@ -1,3 +1,11 @@
+# @Author: Alfonsas Jursenas
+# @Date:   2020-03-23T11:41:30+02:00
+# @Email:  alfonsas.jursenas@gmail.com
+# @Last modified by:   Alfonsas Jursenas
+# @Last modified time: 2020-04-06T23:51:10+03:00
+
+
+
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
