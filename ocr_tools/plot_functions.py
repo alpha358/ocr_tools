@@ -9,6 +9,8 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5, blank=0
     idx_to_text --- map indexes to char strings
     '''
 
+    idx_to_text[0] = 'blank'
+
     # read the model device
     DEVICE = next(model.parameters()).device
 
@@ -31,10 +33,11 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5, blank=0
                 y_hat[n_example, :, :].detach().cpu().numpy(),
                 edgecolors='k'
                 )
+            keys = list(idx_to_text.keys())
             plt.yticks(
-                        list(idx_to_text.keys()), 
-                        list(idx_to_text.values())
-                    )
+                    list(keys),
+                    [idx_to_text[k] for k in keys]
+                )
             plt.ylabel('char_class')
             plt.xlabel('width')
             plt.show()
