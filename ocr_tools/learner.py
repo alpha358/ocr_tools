@@ -161,14 +161,14 @@ class Learner:
             X, Y = X.to(self.DEVICE), Y.to(self.DEVICE)
             for cb in cbs:
                 if hasattr(cb, 'process_batch'): X = cb.process_batch(X)
-
+            
+            Y_pred = self.model(X)
+            
             batch_loss = self.loss(Y_pred, Y)
             if backward_pass: self.backward_pass(batch_loss)
 
-            # softmax after for analysis
+            # softmax needed after for analysis
             if self.softmax:
-                Y_pred = self.softmax(self.model(X))
-            else:
                 Y_pred = self.softmax(self.model(X))
 
             for cb in cbs:
