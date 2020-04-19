@@ -109,6 +109,7 @@ class AccumulateSmoothLoss:
 
 class Learner:
     def __init__(self, model, loss, optimizer, train_loader, val_loader,
+                 softmax = None,
                  epoch_scheduler=None, batch_scheduler=None, mixup=None,
                  time_limit_hr=1, blank=0
                  ):
@@ -123,6 +124,7 @@ class Learner:
         self.time_limit_hr = time_limit_hr
         self.start_time = time.time()
         self.blank = blank
+        self.softmax = softmax
 
         self.reset_history()
 
@@ -160,7 +162,11 @@ class Learner:
             for cb in cbs:
                 if hasattr(cb, 'process_batch'): X = cb.process_batch(X)
 
-            Y_pred = self.model(X)
+            if self.softmax:
+                Y_pred = self.softmax(self.model(X))
+            else:
+                Y_pred = self.softmax(self.model(X))
+
             batch_loss = self.loss(Y_pred, Y)
             if backward_pass: self.backward_pass(batch_loss)
 
