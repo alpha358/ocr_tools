@@ -162,13 +162,14 @@ class Learner:
             for cb in cbs:
                 if hasattr(cb, 'process_batch'): X = cb.process_batch(X)
 
+            batch_loss = self.loss(Y_pred, Y)
+            if backward_pass: self.backward_pass(batch_loss)
+
+            # softmax after for analysis
             if self.softmax:
                 Y_pred = self.softmax(self.model(X))
             else:
                 Y_pred = self.softmax(self.model(X))
-
-            batch_loss = self.loss(Y_pred, Y)
-            if backward_pass: self.backward_pass(batch_loss)
 
             for cb in cbs:
                 if hasattr(cb, 'process_loss'): cb.process_loss(X.size(0), batch_loss.item())
