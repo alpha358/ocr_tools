@@ -1,8 +1,11 @@
 from .utils import preds_to_integer
 import matplotlib.pyplot as plt
+import torch
 
 
-def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5, blank=0):
+
+
+def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5, blank=0, softmax = None):
     '''
     Display test examples and model text with appropriate probs
 
@@ -18,7 +21,10 @@ def display_examples(model, test_loader, idx_to_text, n=20, p_tresh=0.5, blank=0
     for x, y_gt in test_loader:
 
         # batch, character_class, sequence_element_number
-        y_hat = model(x.to(DEVICE))
+        if softmax:
+            y_hat = softmax(model(x.to(DEVICE)))
+        else:
+            y_hat = model(x.to(DEVICE))
 
 
         batch_size = x.shape[0]
