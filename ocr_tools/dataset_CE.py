@@ -35,7 +35,7 @@ class IterDataset_CE(torch.utils.data.IterableDataset):
         random_stamp_date --- function generating random date
         examples_count   --- the number of examples in the dataset
         '''
-        super(IterDataset).__init__()
+        super(IterDataset_CE).__init__()
 
         # init attributes
         self.char_images_dict = char_images_dict.copy() # copy for safety, this is small dictionary.
