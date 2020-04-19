@@ -62,7 +62,12 @@ class IterDataset_CE(torch.utils.data.IterableDataset):
 
             # stitching together the char-images to create an example
             #img, text = self.random_stamp_date(self.char_images_dict)
-            (img, text, classes_mask_small, classes_mask_proj_small, classes_mask) = self.random_stamp_date2(self.char_images_dict, self.bg_paths, self.text_to_idx)
+            try:
+                (img, text, classes_mask_small, classes_mask_proj_small, classes_mask) = self.random_stamp_date2(self.char_images_dict, self.bg_paths, self.text_to_idx)
+            except:
+                # TODO --- fix these edge cases, now second try
+                (img, text, classes_mask_small, classes_mask_proj_small, classes_mask) = self.random_stamp_date2(
+                    self.char_images_dict, self.bg_paths, self.text_to_idx)
 
             # TODO: Cleanup
             del classes_mask_small
