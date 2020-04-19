@@ -426,6 +426,6 @@ def random_stamp_date2(char_img, bg_paths_train, text_to_idx, max_angle=5):
     # contracting y-axis to get x-projection
     classes_mask_proj_small = np.max(classes_mask2_small, axis=0)
 
-    img3 = cv2.cvtColor(img3, cv2.COLOR_RGBA2RGB)
+    img3 = cv2.cvtColor(img3, cv2.COLOR_RGBA2RGB) / 255.0
 
     return  img3, gt_text2, classes_mask2_small, classes_mask_proj_small, classes_mask2
