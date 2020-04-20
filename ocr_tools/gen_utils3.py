@@ -75,7 +75,7 @@ def pad_and_rotate(img, angle, padding = 16, pad_value=(255,255,255,0), rot_mat=
     img2 = np.copy(np.float32(img))
 
     slices = []
-    if len(img2.shape)==2:
+    if False:
         img2 = cv2.copyMakeBorder(img2, top=padding, bottom=padding, left=padding, right=padding, borderType=cv2.BORDER_CONSTANT, value=0 )
 
         if rot_mat:
