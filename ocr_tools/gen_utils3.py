@@ -530,11 +530,12 @@ def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5):
 
         # go back to bboxes & update by rotated and translated
         x_c, y_c, w, h = corners_to_bbox(corners)
-        bboxes_.append((x_c, y_c, w, h, char_idx))
+        # bboxes_.append((x_c, y_c, w, h, char_idx))
+        # TODO
         corners_.append((corners, char_idx))
 
         # goto image center coordinates, rotate, go back to
 
 
 
-    return img3, gt_text2, bboxes, corners_
+    return img3, gt_text2, corners_
