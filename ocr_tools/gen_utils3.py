@@ -354,12 +354,12 @@ def characters_rgba(char_img,
                             top_margin = top_margin[n]
         )
         del char_img_
-        gc.collect()
+        # gc.collect()
 
         x_coord += spaces[n] + widths[n] # take a step
 
     del background
-    gc.collect()
+    # gc.collect()
 
 
 #     img2 = cv2.cvtColor(np.uint8(img2), cv2.COLOR_RGBA2RGB)
