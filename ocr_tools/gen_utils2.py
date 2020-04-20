@@ -303,6 +303,10 @@ def characters_rgba(char_img,
         # character onto image
         char_img_ = char_img[char][example_idx]
 
+        if top_margin[n] > 0:
+             top_margin[n] -= 1
+
+             
         img2 = superimpose_img(
                             background,
                             char_img_,
