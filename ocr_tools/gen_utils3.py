@@ -229,7 +229,8 @@ def plan_image(
         if char_type == '.':
             char = '.'
             gt_text.append(char)
-            top_margin.append(64 - char_height // 3 * dh - 2) 
+            # -2 is for rare cases when dot is too big
+            top_margin.append(64 - char_height // 3 * dh - 2)
             spaces[-1] = spacing // 2 * ds # spacing before
             spaces.append(spacing // 2 * ds) # spacing after
 
@@ -265,9 +266,9 @@ def characters_rgba(char_img,
     if not params:
         params = {
             'char_width' : 32,
-            'D_Width' : 10,
+            'D_Width' : 0,
             'char_height' : 64,
-            'D_Height' : 5,
+            'D_Height' : 10,
             'spacing' : 16,
             'D_Spacing' : 20,
             'text' : "XX.XX.XX   X"
