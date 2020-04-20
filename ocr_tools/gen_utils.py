@@ -204,6 +204,10 @@ def random_stamp_date(char_img):
 
 
         # character onto image
+
+
+        if top_margin > 0: top_margin -=1 # minor correction
+
         img2 = superimpose_img(
                             background,
                             np.copy( char_img[char][example_idx] ),
