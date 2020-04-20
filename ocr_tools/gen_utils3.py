@@ -229,7 +229,7 @@ def plan_image(
         if char_type == '.':
             char = '.'
             gt_text.append(char)
-            top_margin.append(64 - char_height // 3 * dh) - 2 
+            top_margin.append(64 - char_height // 3 * dh - 2) 
             spaces[-1] = spacing // 2 * ds # spacing before
             spaces.append(spacing // 2 * ds) # spacing after
 
