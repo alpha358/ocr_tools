@@ -283,8 +283,8 @@ def characters_rgba(char_img,
     # numbers image size
     height = np.max(
                 (
-                    np.max(heights), # char heights
-                    np.min(heights) + np.max(top_margin) # small chars with margin
+                    # needed background heights
+                    np.max(np.array(heights) + np.array(top_margin))
                 )
             )
     width = np.sum(widths)+np.sum(spaces[0:-1]) # ignore last space
