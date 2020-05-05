@@ -451,9 +451,7 @@ def corners_to_bbox(corners):
     return x_c, y_c, width, height
 
 
-
-
-def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5):
+def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5, params=False):
     '''
     Returns
     img --- date img, rgb, float, normalized by 255
@@ -470,7 +468,7 @@ def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5):
 
     # ======================= Transperant numbers image ========================
     # generate the numbers
-    img2, gt_text2, bboxes = characters_rgba(char_img, text_to_idx)
+    img2, gt_text2, bboxes = characters_rgba(char_img, text_to_idx, params = params)
 
     # blur numbers alpha channel
     # img2[:,:,3]  = cv2.GaussianBlur(np.uint8(img2[:,:,3]), (3,3), 0)
