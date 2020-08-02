@@ -451,7 +451,7 @@ def corners_to_bbox(corners):
     return x_c, y_c, width, height
 
 
-def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5, params=False):
+def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5, params=False, text = "XX.XX.XX   X", size=(128, 576)):
     '''
     Returns
     img --- date img, rgb, float, normalized by 255
@@ -461,14 +461,14 @@ def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5, params
     # ========================== Make the background ===========================
     bg = cv2.imread(np.random.choice(bg_paths_train))  # random bg
     bg = cv2.cvtColor(np.uint8(bg), cv2.COLOR_RGBA2RGB)
-    bg = random_bg_cut(bg, height=128, width=576)
+    bg = random_bg_cut(bg, height=size[0], width=size[1])
     # add alpha dimension to the bg
-    bg_ = np.ones((128, 576, 4))*255
+    bg_ = np.ones((size[0], size[1], 4))*255
     bg_[:, :, 0:3] = bg
 
     # ======================= Transperant numbers image ========================
     # generate the numbers
-    img2, gt_text2, bboxes = characters_rgba(char_img, text_to_idx, params = params)
+    img2, gt_text2, bboxes = characters_rgba(char_img, text_to_idx, params = params, text=text)
 
     # blur numbers alpha channel
     # img2[:,:,3]  = cv2.GaussianBlur(np.uint8(img2[:,:,3]), (3,3), 0)
