@@ -271,7 +271,7 @@ def characters_rgba(char_img,
             'D_Height' : 10,
             'spacing' : 16,
             'D_Spacing' : 20,
-            'text' : "XX.XX.XX   X"
+            'text' : text
         }
 
     gt_text, widths, heights, spaces, top_margin  = plan_image(**params)
