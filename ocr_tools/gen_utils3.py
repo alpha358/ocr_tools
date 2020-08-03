@@ -173,7 +173,8 @@ def plan_image(
     D_Height = 5, #
     spacing = 32,
     D_Spacing = 5,
-    text = "XX.XX.XX   X"
+    text = "XX.XX.XX   X",
+    same_aspects = True
 ):
     '''
     Generate image plans
@@ -200,13 +201,20 @@ def plan_image(
     rnd = lambda : (2*np.random.rand() - 1)
 
 
-    # generating "plans" for the image
-    for char_type in text:
-
+    if same_aspects:
         # multiplicative distortions
         dw = 1 + D_Width / 100 * rnd()
         dh = 1 + D_Height / 100 * rnd()
         ds = 1 + D_Spacing / 100 * rnd()
+
+    # generating "plans" for the image
+    for char_type in text:
+
+        if not same_aspects:
+            # multiplicative distortions
+            dw = 1 + D_Width / 100 * rnd()
+            dh = 1 + D_Height / 100 * rnd()
+            ds = 1 + D_Spacing / 100 * rnd()
 
 
         # Character cases
@@ -246,6 +254,7 @@ def characters_rgba(char_img,
                     text_to_idx,
                     params = False,
                     text = "XX.XX.XX   X",
+                    same_aspects = True,
                     ):
     '''
     Generate empty characters image + bbox
@@ -271,7 +280,8 @@ def characters_rgba(char_img,
             'D_Height' : 10,
             'spacing' : 16,
             'D_Spacing' : 20,
-            'text' : text
+            'text' : text,
+            'same_aspects' : same_aspects
         }
 
     gt_text, widths, heights, spaces, top_margin  = plan_image(**params)
@@ -451,7 +461,14 @@ def corners_to_bbox(corners):
     return x_c, y_c, width, height
 
 
-def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5, params=False, text = "XX.XX.XX   X", size=(128, 576)):
+def random_stamp_date(char_img,
+                      bg_paths_train,
+                      text_to_idx,
+                      max_angle=5,
+                      params=False,
+                      text = "XX.XX.XX   X",
+                      size=(128, 576),
+                      same_aspects=True):
     '''
     Returns
     img --- date img, rgb, float, normalized by 255
@@ -468,7 +485,7 @@ def random_stamp_date(char_img, bg_paths_train, text_to_idx, max_angle=5, params
 
     # ======================= Transperant numbers image ========================
     # generate the numbers
-    img2, gt_text2, bboxes = characters_rgba(char_img, text_to_idx, params = params, text=text)
+    img2, gt_text2, bboxes = characters_rgba(char_img, text_to_idx, params = params, text=text, same_aspects=same_aspects)
 
     # blur numbers alpha channel
     # img2[:,:,3]  = cv2.GaussianBlur(np.uint8(img2[:,:,3]), (3,3), 0)
