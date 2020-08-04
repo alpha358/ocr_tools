@@ -205,7 +205,6 @@ def plan_image(
         # multiplicative distortions
         dw = 1 + D_Width / 100 * rnd()
         dh = 1 + D_Height / 100 * rnd()
-        ds = 1 + D_Spacing / 100 * rnd()
 
     # generating "plans" for the image
     for char_type in text:
@@ -214,8 +213,8 @@ def plan_image(
             # multiplicative distortions
             dw = 1 + D_Width / 100 * rnd()
             dh = 1 + D_Height / 100 * rnd()
-            ds = 1 + D_Spacing / 100 * rnd()
 
+        ds = 1 + D_Spacing / 100 * rnd()
 
         # Character cases
         if char_type == 'X':
