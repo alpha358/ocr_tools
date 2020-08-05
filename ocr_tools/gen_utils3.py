@@ -467,7 +467,9 @@ def random_stamp_date(char_img,
                       params=False,
                       text = "XX.XX.XX   X",
                       size=(128, 576),
-                      same_aspects=True):
+                      same_aspects=True,
+                      bg_augmentator = False
+                      ):
     '''
     Returns
     img --- date img, rgb, float, normalized by 255
@@ -478,6 +480,10 @@ def random_stamp_date(char_img,
     bg = cv2.imread(np.random.choice(bg_paths_train))  # random bg
     bg = cv2.cvtColor(np.uint8(bg), cv2.COLOR_RGBA2RGB)
     bg = random_bg_cut(bg, height=size[0], width=size[1])
+
+    if bg_augmentator:
+        bg = bg_augmentator(bg)
+
     # add alpha dimension to the bg
     bg_ = np.ones((size[0], size[1], 4))*255
     bg_[:, :, 0:3] = bg
