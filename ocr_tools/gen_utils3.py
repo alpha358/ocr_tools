@@ -469,8 +469,7 @@ def random_stamp_date(char_img,
                       size=(128, 576),
                       same_aspects=True,
                       bg_augmentator = False,
-                      poisson = False
-                      ):
+                      poisson = False):
     '''
     Returns
     img --- date img, rgb, float, normalized by 255

@@ -71,6 +71,7 @@ def superimpose_img(background,
                             mask_bw) for i in range(3)]
 
         background = cv2.merge(result_stack)
+        del mask_bw
     else:
         # softly remove the background where the symbol must be
         background[top:top + height, left:left+width] *= (1-alpha)
@@ -80,7 +81,6 @@ def superimpose_img(background,
     # Mem clean
     del img
     del alpha
-    del mask_bw
 
     return np.asarray(background, dtype = np.int32)
 
