@@ -468,7 +468,7 @@ def random_stamp_date(char_img,
                       text = "XX.XX.XX   X",
                       size=(128, 576),
                       same_aspects=True,
-                      bg_augmentator = False
+                      bg_augmentator = False,
                       poisson = False
                       ):
     '''
