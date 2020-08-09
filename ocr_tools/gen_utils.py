@@ -55,7 +55,9 @@ def superimpose_img(background,
     # use alpha channel to kill background
     alpha = np.expand_dims(img[:,:,3], axis=2)
     alpha = alpha / np.max(alpha)
-    img = img * alpha
+
+    if not poisson:
+        img = img * alpha
 
 
     top, left = topleft
@@ -64,7 +66,7 @@ def superimpose_img(background,
 
 
     if poisson:
-        mask_bw = remove_small_objects(alpha > np.std(alpha), min_size=4)
+        mask_bw = remove_small_objects(alpha > 0.2, min_size=4)
         result_stack = [poisson_blend(
                             img[:,:,i],
                             background[top:top + height, left:left+width, i],
