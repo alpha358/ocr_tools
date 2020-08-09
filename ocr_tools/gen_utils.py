@@ -72,6 +72,10 @@ def superimpose_img(background,
                             background[top:top + height, left:left+width, i],
                             mask_bw) for i in range(3)]
 
+        # clip overflows produced by the Poisson blending
+        for i in range(3):
+            result_stack[i] = np.clip(result_stack[i], 0, 255)
+
         background = cv2.merge(result_stack)
         del mask_bw
     else:
