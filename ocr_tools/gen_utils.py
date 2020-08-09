@@ -64,7 +64,7 @@ def superimpose_img(background,
 
 
     if poisson:
-        mask_bw = remove_small_objects(alpha > 0.5, min_size=4)
+        mask_bw = remove_small_objects(alpha > np.std(alpha), min_size=4)
         result_stack = [poisson_blend(
                             img[:,:,i],
                             background[top:top + height, left:left+width, i],
