@@ -42,7 +42,7 @@ def superimpose_img(background,
                     img,
                     topleft,
                     char_size=(32, 64),
-                    poisson = False
+                    poisson = False,
                     top_margin = 0 ):
     '''
     Put character onto the background
