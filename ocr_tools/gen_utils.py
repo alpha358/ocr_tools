@@ -36,7 +36,7 @@ def get_imgs_dict(path='img/numbers/',
 
 # ============================= Superimpose chars ==============================
 from skimage.morphology import remove_small_objects
-import poisson
+from .poisson import process as poisson_blend
 
 def superimpose_img(background,
                     img,
@@ -65,10 +65,11 @@ def superimpose_img(background,
 
     if poisson:
         mask_bw = remove_small_objects(alpha > 0.5, min_size=4)
-        result_stack = [poisson.process(
+        result_stack = [poisson_blend(
                             img[:,:,i],
                             background[top:top + height, left:left+width, i],
                             mask_bw) for i in range(3)]
+
         background = cv2.merge(result_stack)
     else:
         # softly remove the background where the symbol must be
