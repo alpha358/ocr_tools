@@ -35,7 +35,15 @@ def get_imgs_dict(path='img/numbers/',
 
 
 # ============================= Superimpose chars ==============================
-def superimpose_img(background, img, topleft, char_size=(32,64), top_margin = 0 ):
+from skimage.morphology import remove_small_objects
+import poisson
+
+def superimpose_img(background,
+                    img,
+                    topleft,
+                    char_size=(32, 64),
+                    poisson = False
+                    top_margin = 0 ):
     '''
     Put character onto the background
 
@@ -54,16 +62,24 @@ def superimpose_img(background, img, topleft, char_size=(32,64), top_margin = 0 
     top = top + top_margin
     height, width, _ = img.shape
 
-    # softly remove the background where the symbol must be
-    background[top:top + height, left:left+width] *= (1-alpha)
 
-    # superimpose the image onto the background
-    background[top:top + height, left:left+width] += img
-
+    if poisson:
+        mask_bw = remove_small_objects(alpha > 0.5, min_size=4)
+        result_stack = [poisson.process(
+                            img[:,:,i],
+                            background[top:top + height, left:left+width, i],
+                            mask_bw) for i in range(3)]
+        background = cv2.merge(result_stack)
+    else:
+        # softly remove the background where the symbol must be
+        background[top:top + height, left:left+width] *= (1-alpha)
+        # superimpose the image onto the background
+        background[top:top + height, left:left+width] += img
 
     # Mem clean
     del img
     del alpha
+    del mask_bw
 
     return np.asarray(background, dtype = np.int32)
 

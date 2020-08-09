@@ -469,6 +469,7 @@ def random_stamp_date(char_img,
                       size=(128, 576),
                       same_aspects=True,
                       bg_augmentator = False
+                      poisson = False
                       ):
     '''
     Returns
@@ -513,7 +514,13 @@ def random_stamp_date(char_img,
     dx = np.random.randint(0, w0 - w1)
     dy = np.random.randint(0, h0 - h1)
 
-    img3 = superimpose_img(bg_, img2, topleft=(dy, dx), char_size=(img2.shape[1], img2.shape[0]))
+    img3 = superimpose_img(
+                            bg_,
+                            img2,
+                            topleft=(dy, dx),
+                            char_size=(img2.shape[1], img2.shape[0]),
+                            poisson = poisson
+                           )
 
     img3 = np.asarray(img3 / img3.max() * 255, dtype=np.uint8)
 
